@@ -125,8 +125,12 @@ func main() {
 
 	}
 
-	createTerraformFile("do-infrastructure.tf", doTemplate, doInfos)
-	createTerraformFile("aws-infrastructure.tf", awsTemplate, awsInfo)
+        if *doProvider {
+		createTerraformFile("do-infrastructure.tf", doTemplate, doInfos)
+        }
+	if *awsProvider {
+        	createTerraformFile("aws-infrastructure.tf", awsTemplate, awsInfo)
+        }
 
 	executeTerraform([]string{"apply", "-var-file=secrets.tfvars", "-auto-approve"})
 
